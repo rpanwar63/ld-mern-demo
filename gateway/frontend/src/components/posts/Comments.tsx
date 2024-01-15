@@ -2,6 +2,7 @@ import { FC, FormEvent, useEffect, useState } from "react";
 import { apiCall } from "../../utils/apiCall";
 import { CommentType, PaginationType } from "../../types/Post";
 import useIsLoggedInHook from "../../utils/isLoggedInHook";
+import { formatDate } from "../../utils/helper";
 
 type CommentsProps = {
   postId: string;
@@ -19,7 +20,7 @@ const Comments: FC<CommentsProps> = ({ postAuthorId, postId }) => {
       comments: CommentType[];
       pagination: PaginationType;
     };
-    setCommentsData(formatedResult.comments);
+    setCommentsData(formatedResult.comments || []);
   };
   const handleCommentSubmission = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,6 +63,7 @@ const Comments: FC<CommentsProps> = ({ postAuthorId, postId }) => {
           <p className="comment_text">
             {comment.author.username}: {comment.content}
           </p>
+          <p>{formatDate(comment.date)}</p>
         </div>
       ))}
     </div>

@@ -20,6 +20,20 @@ const Notifications = () => {
       setData(formatedResult.notifications);
     } else toast.error("Something went wrong!");
   };
+  const handleRemove = async (notification: NotificationType) => {
+    const result = await apiCall(
+      "post",
+      `/notify/remove?user_id=${myId}`,
+      notification
+    );
+    const formatedResult = result as {
+      notifications: NotificationType[];
+    };
+    if (formatedResult?.notifications) {
+      setData(formatedResult.notifications);
+      toast.success("Removed successfully!");
+    } else toast.error("Something went wrong!");
+  };
 
   useEffect(() => {
     if (myId) fetchData();
@@ -30,12 +44,15 @@ const Notifications = () => {
       <Header />
       <div className="notification_container">
         {data.map(notification => (
-          <Link to={`/post/${notification.post_id}`}>
-            <div className="notification">
-              <p>{notification.content}</p>
-              <p>{formatDate(notification.date)}</p>
-            </div>
-          </Link>
+          <div className="wrapper">
+            <Link to={`/post/${notification.post_id}`}>
+              <div className="notification">
+                <p>{notification.content}</p>
+                <p>{formatDate(notification.date)}</p>
+              </div>
+            </Link>
+            <button onClick={() => handleRemove(notification)}>+</button>
+          </div>
         ))}
       </div>
     </>

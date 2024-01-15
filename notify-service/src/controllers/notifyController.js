@@ -3,10 +3,26 @@ import Notify from "../models/notifyModel.js";
 
 const getNotifications = asyncHandler(async (req, res) => {
   const user_id = req.userId;
-  const user = await Notify.findOne({ user_id }).sort({ date: -1 });
+  const user = await Notify.findOne({ user_id });
   res.status(200).json({
-    notifications: user?.notifications || [],
+    notifications: user?.notifications.reverse() || [],
   });
+});
+
+const removeNotifications = asyncHandler(async (req, res) => {
+  const user_id = req.userId;
+  const notification = req.body;
+  const user = await Notify.findOne({ user_id });
+  if (user) {
+    user?.notifications.pull(notification);
+    await user.save();
+    res.status(200).json({
+      notifications: user?.notifications.reverse() || [],
+    });
+  } else {
+    res.status(404);
+    throw new Error("Something went wrong!");
+  }
 });
 
 const createNotification = asyncHandler(async (req, res) => {
@@ -20,7 +36,7 @@ const createNotification = asyncHandler(async (req, res) => {
       username: sender_username,
     },
   };
-  const user = await Notify.findOne({ user_id }).sort({ date: -1 });
+  const user = await Notify.findOne({ user_id });
   if (user) {
     user.notifications.push(notification);
     user.save();
@@ -38,4 +54,4 @@ const createNotification = asyncHandler(async (req, res) => {
   }
 });
 
-export { createNotification, getNotifications };
+export { createNotification, getNotifications, removeNotifications };

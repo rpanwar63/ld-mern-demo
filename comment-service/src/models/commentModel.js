@@ -5,24 +5,28 @@ const commentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  content: {
-    type: String,
-    required: true,
-  },
-  author: {
-    id: {
-      type: String,
-      required: true,
+  comments: [
+    {
+      content: {
+        type: String,
+        required: true,
+      },
+      author: {
+        id: {
+          type: String,
+          required: true,
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
     },
-    username: {
-      type: String,
-      required: true,
-    },
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
+  ],
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

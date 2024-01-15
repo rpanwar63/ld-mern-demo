@@ -14,6 +14,7 @@ import Profile from "./components/profile/Profile";
 import Register from "./components/auth/Register";
 import Home from "./components/home/Home";
 import Notifications from "./components/notification/Notifications";
+import PostView from "./components/posts/PostView";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="/auth/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/notifications" element={<Notifications />} />
+      <Route path="/post/:post_id" element={<PostView />} />
     </Route>
   )
 );
