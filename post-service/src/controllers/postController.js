@@ -1,6 +1,15 @@
 import asyncHandler from "express-async-handler";
 import Post from "../models/postModel.js";
-
+const getPostById = asyncHandler(async (req, res) => {
+  const { post_id } = req.params;
+  const post = await Post.findOne({ _id: post_id });
+  if (post) {
+    res.status(200).json(post);
+  } else {
+    res.status(404);
+    throw new Error("Post not found!");
+  }
+});
 const getAllPosts = asyncHandler(async (req, res) => {
   const { page = 1, limit = 5 } = req.query;
   const posts = await Post.find().sort({ date: -1 });
@@ -37,4 +46,4 @@ const submitPost = asyncHandler(async (req, res) => {
   }
 });
 
-export { getAllPosts, submitPost };
+export { getAllPosts, getPostById, submitPost };

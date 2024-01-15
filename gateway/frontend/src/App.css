@@ -110,7 +110,7 @@ nav > ul > li > a {
   color: #ffffff;
   display: block;
   border-radius: 8px;
-  width: 70%;
+  width: calc(100% - 20px);
 }
 .add_comment > form > button {
   border: none;
@@ -123,7 +123,14 @@ nav > ul > li > a {
 .add_comment > form > button:hover {
   background: #c1c1c1;
 }
-.comment_text {
+.comment {
+  display: flex;
+  align-items: flex-start;
+}
+.comment > .comment_text {
+  flex: 1;
+}
+.comment > p {
   color: #ffffff;
   font-size: 0.9rem;
 }
@@ -197,10 +204,32 @@ nav > ul > li > a {
 .new_post_container > button:hover {
   background: #c1c1c1;
 }
-.notification_container > a {
-  text-decoration: none;
+.notification_container > .wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }
-.notification_container > a > .notification {
+.notification_container > .wrapper > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  color: #c1c1c1;
+  rotate: 45deg;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 600;
+  height: 24px;
+  width: 24px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.notification_container > .wrapper > a {
+  text-decoration: none;
+  flex: 1;
+}
+.notification_container > .wrapper > a > .notification {
   display: flex;
   justify-content: space-between;
   align-items: center;

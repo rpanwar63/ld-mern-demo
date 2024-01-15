@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { PostType } from "../../types/Post";
 import Comments from "./Comments";
+import { formatDate } from "../../utils/helper";
 
 type PostTypeProps = {
   data: PostType;
@@ -15,7 +16,9 @@ const Post: FC<PostTypeProps> = ({ data }) => {
 
   return (
     <article className="post_container">
-      <h2>Author: {postData.author.username}</h2>
+      <h2>
+        Author: {postData.author.username} - {formatDate(postData.date)}
+      </h2>
       <p>{postData.content}</p>
       <button
         className="show-comments-btn"
